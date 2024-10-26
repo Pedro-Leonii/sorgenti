@@ -19,8 +19,10 @@ jobs:
             
             - name: Setup tex path
               id: setup_tex
-              run: echo "TEX_PATH=$(find -type f -name "*.tex")" >> $GITHUB_OUTPUT
-
+              run: |
+                  echo "text<<$EOF" >> $GITHUB_OUTPUT
+                  echo "TEX_PATH=$(find -type f -name "*.tex")" >> $GITHUB_OUTPUT
+                  echo "$EOF" >> $GITHUB_OUTPUT
               
             - name: Compile LaTeX document
               uses: xu-cheng/latex-action@v3
