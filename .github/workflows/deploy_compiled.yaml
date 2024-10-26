@@ -35,7 +35,8 @@ jobs:
               with:
                 repository: Pedro-Leonii/compilati
                 path: dst
-                token: ${{ secrets.PAT_COMPILATI }}
+                token: |
+                    ${{ secrets.PAT_COMPILATI }}
                 
             - name: Remove usless files 
               run: bash src/script.sh
