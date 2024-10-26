@@ -25,10 +25,7 @@ jobs:
                     echo "EOF" >> $GITHUB_OUTPUT
                   
             - name: Compile LaTeX document
-              uses: xu-cheng/latex-action@v3
-              with:
-                root_file: |
-                    ${{ steps.setup_tex.outputs.TEX_PATH }}
+              run: echo ${{ steps.setup_tex.outputs.TEX_PATH }}
             
             - name: View results in src
               run: ls -R src
