@@ -26,6 +26,11 @@ jobs:
               with:
                 repository: Pedro-Leonii/compilati
                 path: dst
-            
-            - name: view result
+                
+            - name: Remove usless files 
               run: bash src/script.sh
+
+            - name: Commit compiled
+              uses: EndBug/add-and-commit@v9
+              with:
+                cwd: dst
