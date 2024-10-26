@@ -22,4 +22,4 @@ jobs:
                 path: dst
             
             - name: view result
-              run: echo ${env.DIR_TO_DEL}
+              run: echo $DIR_TO_DEL
