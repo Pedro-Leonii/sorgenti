@@ -21,7 +21,7 @@ jobs:
               uses: xu-cheng/latex-action@v3
               with:
                 working_directory: src
-                root_file: "*.tex"
+                root_file: ${{ find -type f -name "*.tex"}}
             
             - name: View results in src
               run: ls -R src
