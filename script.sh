@@ -6,6 +6,6 @@ do
   rm -r dst/$f
 done
 
-find dst/*/ -type f ! name "*.pdf" -delete
+find dst/*/ -type f ! -name "*.pdf" -delete
 
 ls dst
