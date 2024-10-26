@@ -22,4 +22,4 @@ jobs:
                 path: dst
             
             - name: view result
-              run: bash src/script.sh
+              run: echo ${env.DIR_TO_DEL}
