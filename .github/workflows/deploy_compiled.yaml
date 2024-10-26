@@ -23,6 +23,9 @@ jobs:
                 working_directory: src
                 root_file: "*.tex"
             
+            - name: View results in src
+              run: ls -r src
+              
             - name: Clone compiled repository
               uses: actions/checkout@v4
               with:
@@ -33,7 +36,7 @@ jobs:
             - name: Remove usless files 
               run: bash src/script.sh
 
-            - name: View results
+            - name: View results in dst
               run: ls -r dst
 
             - name: Commit compiled
