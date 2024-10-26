@@ -8,6 +8,8 @@ on:
     
 jobs:
     deploy_compiled:
+        env: 
+            DIR_TO_DEL: ${{vars.DIR_TO_DEL}}
         runs-on: ubuntu-latest
         steps:
             - name: Clone source repository
