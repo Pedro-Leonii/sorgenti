@@ -18,7 +18,7 @@ jobs:
             - name: Clone compiled repository
               uses: actions/checkout@v4
               with:
-                repository: Pedro-Leonii/compialti
+                repository: Pedro-Leonii/compilati
                 path: dst
             
             - name: view result
