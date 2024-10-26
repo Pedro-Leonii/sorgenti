@@ -1,1 +1,1 @@
-echo ${env.DIR_TO_DEL}
+echo ${var.DIR_TO_DEL}
