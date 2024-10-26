@@ -25,7 +25,8 @@ jobs:
               uses: xu-cheng/latex-action@v3
               with:
                 working_directory: src
-                root_file: ${{ env.TEX_PATH }}
+                root_file: |
+                    ${{ env.TEX_PATH }}
             
             - name: View results in src
               run: ls -R src
@@ -35,8 +36,7 @@ jobs:
               with:
                 repository: Pedro-Leonii/compilati
                 path: dst
-                token: |
-                    ${{ secrets.PAT_COMPILATI }}
+                token: ${{ secrets.PAT_COMPILATI }}
                 
             - name: Remove usless files 
               run: bash src/script.sh
