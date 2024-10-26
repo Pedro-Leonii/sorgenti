@@ -1,1 +1,1 @@
-echo ${vars.DIR_TO_DEL}
+echo ${{vars.DIR_TO_DEL}}
