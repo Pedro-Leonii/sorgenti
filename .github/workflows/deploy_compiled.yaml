@@ -24,7 +24,7 @@ jobs:
                 root_file: "*.tex"
             
             - name: View results in src
-              run: ls -r src
+              run: ls -R src
               
             - name: Clone compiled repository
               uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
               run: bash src/script.sh
 
             - name: View results in dst
-              run: ls -r dst
+              run: ls -R dst
 
             - name: Commit compiled
               uses: EndBug/add-and-commit@v9
