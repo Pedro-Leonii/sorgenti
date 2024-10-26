@@ -16,12 +16,16 @@ jobs:
               uses: actions/checkout@v4
               with:
                 path: src
-                
+            
+            - name: Setup tex path
+              run: echo "TEX_PATH=$(find -type f -name "*.tex")" >> $GITHUB_ENV
+
+              
             - name: Compile LaTeX document
               uses: xu-cheng/latex-action@v3
               with:
                 working_directory: src
-                root_file: ${{ find -type f -name "*.tex"}}
+                root_file: ${{ env.TEX_PATH }}
             
             - name: View results in src
               run: ls -R src
