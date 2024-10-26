@@ -13,14 +13,13 @@ jobs:
             - name: Clone source repository
               uses: actions/checkout@v4
               with:
-                repository: Pedro-Leonii/sorgenti
-                path: sorgenti
+                path: src
 
             - name: Clone compiled repository
               uses: actions/checkout@v4
               with:
                 repository: Pedro-Leonii/compialti
-                path: compilati
+                path: dst
             
             - name: view result
               run: ls
