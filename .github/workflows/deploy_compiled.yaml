@@ -18,7 +18,8 @@ jobs:
                 path: src
             
             - name: Setup tex path
-              run: echo "TEX_PATH=$(find -type f -name "*.tex")" >> $GITHUB_ENV
+              id: setup_tex
+              run: echo "TEX_PATH=$(find -type f -name "*.tex")" >> $GITHUB_OUTPUT
 
               
             - name: Compile LaTeX document
@@ -26,7 +27,7 @@ jobs:
               with:
                 working_directory: src
                 root_file: |
-                    ${{ env.TEX_PATH }}
+                    ${{ steps.setup_tex.outputs.TEX_PATH }}
             
             - name: View results in src
               run: ls -R src
