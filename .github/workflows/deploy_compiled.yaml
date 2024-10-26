@@ -20,7 +20,7 @@ jobs:
             - name: Setup tex path
               id: setup_tex
               run: |
-                    echo "TEXT_PATH<<EOF" >> $GITHUB_OUTPUT
+                    echo "TEX_PATH<<EOF" >> $GITHUB_OUTPUT
                     echo "$(find -type f -name "*.tex")" >> $GITHUB_OUTPUT
                     echo "EOF" >> $GITHUB_OUTPUT
                   
