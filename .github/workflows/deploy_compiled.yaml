@@ -31,6 +31,9 @@ jobs:
             - name: Remove usless files 
               run: bash src/script.sh
 
+            - name: View results
+              run: ls -r dst
+
             - name: Commit compiled
               uses: EndBug/add-and-commit@v9
               with:
