@@ -20,11 +20,9 @@ jobs:
             - name: Setup tex path
               id: setup_tex
               run: |
-                 { 
-                     echo "TEXT_PATH<<EOF"
-                      echo "$(find -type f -name "*.tex")" 
-                      echo EOF
-                  } >> $GITHUB_ENV
+                    echo "TEXT_PATH<<EOF" >> $GITHUB_OUTPUT
+                    echo "$(find -type f -name "*.tex")" >> $GITHUB_OUTPUT
+                    echo "EOF" >> $GITHUB_OUTPUT
                   
             - name: Compile LaTeX document
               uses: xu-cheng/latex-action@v3
