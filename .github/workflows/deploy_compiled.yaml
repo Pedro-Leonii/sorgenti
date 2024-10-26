@@ -1,0 +1,24 @@
+name: deploy dei file LaTeX compilati nel repository destinazione
+
+on:
+    push: 
+        branches:
+            - main
+jobs:
+    deploy_compiled:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clone source repository
+              uses: actions/checkout@v4
+              with:
+                repository: Pedro-Leonii/sorgenti
+                path: sorgenti
+
+            - name: Clone compiled repository
+              uses: action/checkout@v4
+              with:
+                repository: Pedro-Leonii/compialti
+                path: compilati
+            
+            - name: view result
+              run: ls
