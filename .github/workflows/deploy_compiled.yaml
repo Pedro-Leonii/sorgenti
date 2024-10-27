@@ -34,7 +34,6 @@ jobs:
             - name: Compile LaTeX document
               uses: xu-cheng/latex-action@v3
               with:
-                working_directory: src
                 root_file: |
                     ${{ steps.setup_tex.outputs.TEX_PATH }}
       
