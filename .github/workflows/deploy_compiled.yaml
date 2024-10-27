@@ -21,7 +21,7 @@ jobs:
               id: setup_tex
               run: |
                     echo "TEX_PATH<<EOF" >> $GITHUB_OUTPUT
-                    echo "$(find -type f -name "*.tex" | grep -v $(echo $DIR_TO_DEL | sed "s/\s/|/g"))" >> $GITHUB_OUTPUT
+                    echo "$(find -type f -name "*.tex" | grep -v $(echo $DIR_TO_DEL | sed 's/ /\\|/g'))" >> $GITHUB_OUTPUT
                     echo "EOF" >> $GITHUB_OUTPUT
                   
             - name: view tex path
