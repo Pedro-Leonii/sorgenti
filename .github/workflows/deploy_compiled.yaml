@@ -25,6 +25,6 @@ jobs:
                     echo "EOF" >> $GITHUB_OUTPUT
                   
             - name: view tex path
-              run: echo ${{ steps.setup_tex.outputs.TEX_PATH }}"
+              run: echo ${{ steps.setup_tex.outputs.TEX_PATH }}
             
            
