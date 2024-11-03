@@ -27,7 +27,7 @@ jobs:
 
             - name: set env
               env: 
-                FILES_TO_DEL: ${{ steps.changed.outputs.renamed_files }}
+                FILES_TO_DEL: ${{ steps.changed.outputs.deleted_files }}
                 FILES_TO_COMPILE: ${{ steps.changed.outputs.all_changed_files }} 
               run: echo "${FILES_TO_DEL}"
                   
