@@ -12,43 +12,14 @@ jobs:
             DIR_TO_DEL: ${{vars.DIR_TO_DEL}}
         runs-on: ubuntu-latest
         steps:
-            - name: Clone source repository
-              uses: actions/checkout@v4
+            - name: get modified files
+              id: chagned
+              uses: tj-actions/changed-files@v45
               with:
-                path: src
+                include_all_old_new_renamed_files: true
+                
 
-            - name: Clone compiled repository
-              uses: actions/checkout@v4
-              with:
-                repository: Pedro-Leonii/compilati
-                path: dst
-                token: ${{ secrets.PAT_COMPILATI }}
-            
-            - name: Setup tex path
-              id: setup_tex
-              run: |
-                    echo "TEX_PATH<<EOF" >> $GITHUB_OUTPUT
-                    echo "$(find -type f -name "*.tex" | grep -v $(echo $DIR_TO_DEL | sed 's/ /\\|/g'))" >> $GITHUB_OUTPUT
-                    echo "EOF" >> $GITHUB_OUTPUT
+            - name: view renamed files
+              run:  echo ${{steps.changed.all_old_new_renamed_files}}
                   
-            - name: Compile LaTeX document
-              uses: xu-cheng/latex-action@v3
-              with:
-                work_in_root_file_dir: true
-                root_file: |
-                    ${{ steps.setup_tex.outputs.TEX_PATH }}
-      
-            - name: Remove usless files in src
-              run: |
-                cd src
-                rm -rf $DIR_TO_DEL
-                find * -type f ! -name "*.pdf" -delete
-                cd ..
-            
-            - name: Copy in dst
-              run: cp -r src/* dst
-            
-            - name: Commit compiled
-              uses: EndBug/add-and-commit@v9
-              with:
-                cwd: dst
+                 
