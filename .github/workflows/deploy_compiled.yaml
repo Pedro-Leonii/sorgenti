@@ -26,6 +26,6 @@ jobs:
                 path: src
 
             - name: view renamed files
-              run: echo "${{steps.changed.all_old_new_renamed_files}}"
+              run: echo "${{steps.changed.outputs.all_old_new_renamed_files}}"
                   
                  
