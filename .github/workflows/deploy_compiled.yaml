@@ -24,10 +24,11 @@ jobs:
               with:
                 include_all_old_new_renamed_files: true
                 path: src
+                files: "*.tex"
 
             - name: set env
               env: 
-                FILES_TO_DEL: "${{ steps.changed.outputs.deleted_files }} ${{ steps.changed.outputs.renamed_files }}"
+                FILES_TO_DEL: ${{ steps.changed.outputs.renamed_files }}
                 FILES_TO_COMPILE: ${{ steps.changed.outputs.all_changed_files }} 
               run: echo "${FILES_TO_DEL}"
                   
