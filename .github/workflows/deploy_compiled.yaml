@@ -12,12 +12,17 @@ jobs:
             DIR_TO_DEL: ${{vars.DIR_TO_DEL}}
         runs-on: ubuntu-latest
         steps:
+            - name: Clone source repository
+              uses: actions/checkout@v4
+              with:
+                path: src
+                
             - name: get modified files
               id: chagned
               uses: tj-actions/changed-files@v45
               with:
                 include_all_old_new_renamed_files: true
-                
+                path: src
 
             - name: view renamed files
               run:  echo ${{steps.changed.all_old_new_renamed_files}}
