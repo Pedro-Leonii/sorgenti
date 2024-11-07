@@ -9,7 +9,9 @@ on:
 jobs:
     deploy_compiled:
         env: 
-            DIR_TO_DEL: ${{vars.DIR_TO_DEL}}
+            DIRS_TO_IGNORE: ${{vars.DIRS_TO_IGNORE}}
+            DIRS_TO_DEL: ${{vars.DIRS_TO_DEL}}
+            
         runs-on: ubuntu-latest
         steps:
             - name: Clone source repository
@@ -28,7 +30,7 @@ jobs:
               id: setup_tex
               run: |
                     echo "TEX_PATH<<EOF" >> $GITHUB_OUTPUT
-                    echo "$(find -type f -name "*.tex" | grep -v $(echo $DIR_TO_DEL | sed 's/ /\\|/g'))" >> $GITHUB_OUTPUT
+                    echo "$(find -type f -name "*.tex" | grep -v $(echo ${DIRS_TO_IGNORE} ${DIRS_TO_DEL}| sed 's/ /\\|/g'))" >> $GITHUB_OUTPUT
                     echo "EOF" >> $GITHUB_OUTPUT
                   
             - name: Compile LaTeX document
@@ -41,9 +43,16 @@ jobs:
             - name: Remove usless files in src
               run: |
                 cd src
-                rm -rf $DIR_TO_DEL
+                rm -rf $DIRS_TO_DEL
                 find * -type f ! -name "*.pdf" -delete
                 cd ..
+                
+            - name: Copy ignored directories
+              run: |
+                  for d in $DIRS_TO_IGNORE; do
+                    $dest_dir=find "dst/*${f}"
+                    echo "$dest"
+                  done
             
             - name: Copy in dst
               run: cp -r src/* dst
