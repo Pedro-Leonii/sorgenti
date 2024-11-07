@@ -49,9 +49,13 @@ jobs:
                 
             - name: Copy ignored directories
               run: |
+                  i=1
                   for d in $DIRS_TO_IGNORE; do
-                    dest_dir=$(find ./dst -type d -name "*${d}")
-                    echo "${dest_dir}"
+                    dest_dirs=$(find ./dst -type d -name "*${d}")
+                    src_dirs=($(find ./dst -type d -name "*${d}"))
+                    for dest_dir in $dest_dirs; do
+                        cp -rf $dest_dir "../${src_dirs[$i]}"
+                    done
                   done
             
             - name: Copy in dst
