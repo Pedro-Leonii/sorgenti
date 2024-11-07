@@ -58,7 +58,9 @@ jobs:
                         i=$((i + 1)) 
                     done
                   done
-            
+            - name: Clear dst
+              run: rm -rf dst/*
+              
             - name: Copy in dst
               run: cp -r src/* dst
             
