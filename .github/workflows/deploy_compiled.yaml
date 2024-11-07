@@ -52,9 +52,10 @@ jobs:
                   i=1
                   for d in $DIRS_TO_IGNORE; do
                     dest_dirs=$(find ./dst -type d -name "*${d}")
-                    src_dirs=($(find ./dst -type d -name "*${d}"))
+                    src_dirs=($(find ./src -type d -name "*${d}"))
                     for dest_dir in $dest_dirs; do
                         cp -rf $dest_dir "${src_dirs[$i]}"
+                        ((i++))
                     done
                   done
             
