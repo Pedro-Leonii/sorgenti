@@ -1,10 +1,12 @@
 name: deploy dei file LaTeX compilati nel repository destinazione
 
 on:
-    push: 
+     pull_request:
         branches:
-            - main
-    workflow_dispatch:
+          - main 
+        types:
+          - synchronize
+     workflow_dispatch:
     
 jobs:
     deploy_compiled:
@@ -15,20 +17,18 @@ jobs:
             - name: Clone source repository
               uses: actions/checkout@v4
               with:
-                path: src
-
-            - name: Clone compiled repository
-              uses: actions/checkout@v4
-              with:
-                repository: Pedro-Leonii/compilati
-                path: dst
-                token: ${{ secrets.PAT_COMPILATI }}
+                  path: src
+                  ref: ${{github.head_ref}}
             
+            - name: Copy content
+              run: |
+                  cp src/* to_compile
+                  
             - name: Setup tex path
               id: setup_tex
               run: |
                     echo "TEX_PATH<<EOF" >> $GITHUB_OUTPUT
-                    echo "$(find -type f -name "*.tex" | grep -v $(echo $DIR_TO_DEL | sed 's/ /\\|/g'))" >> $GITHUB_OUTPUT
+                    echo "$(find -type f -name "to_compile/*.tex" | grep -v $(echo $DIR_TO_INGORE | sed 's/ /\\|/g'))" >> $GITHUB_OUTPUT
                     echo "EOF" >> $GITHUB_OUTPUT
                   
             - name: Compile LaTeX document
@@ -40,17 +40,18 @@ jobs:
       
             - name: Remove usless files in src
               run: |
-                cd src
-                rm -rf $DIR_TO_DEL
+                cd to_compile
+                rm -rf DIR_TO_INGORE
                 find * -type f ! -name "*.pdf" -delete
                 cd ..
-            
-            - name: Copy in dst
-              run: cp -r src/* dst
+                
+            - name: Update main branch
+              run: |
+                  cp to_compile/* src
+                  cd src
             
             - name: Commit compiled
               uses: EndBug/add-and-commit@v9
               with:
-                cwd: dst
                 default_author: github_actor
                 
