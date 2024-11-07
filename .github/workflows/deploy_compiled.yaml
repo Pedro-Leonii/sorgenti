@@ -54,7 +54,7 @@ jobs:
                     dest_dirs=$(find ./dst -type d -name "*${d}")
                     src_dirs=($(find ./dst -type d -name "*${d}"))
                     for dest_dir in $dest_dirs; do
-                        cp -rf $dest_dir "../${src_dirs[$i]}"
+                        cp -rf $dest_dir "${src_dirs[$i]}"
                     done
                   done
             
