@@ -50,7 +50,7 @@ jobs:
             - name: Copy ignored directories
               run: |
                   for d in $DIRS_TO_IGNORE; do
-                    $dest_dir=find ./dst -type d "*${d}"
+                    $dest_dir = find ./dst -type d "*${d}"
                     echo "${dest_dir}"
                   done
             
