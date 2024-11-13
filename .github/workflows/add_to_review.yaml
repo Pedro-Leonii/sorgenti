@@ -11,8 +11,8 @@ jobs:
      env:
        GH_TOKEN: ${{ github.token }}
        PROJECT_ID: ${{ secrets.PROJECT_ID }}
-       STATUS_FIELD_ID: ${{ github.STATUS_FIELD }}
-       REVIEW_VALUE_ID: ${{ github.VALUE_REVIEW_ID }}
+       STATUS_FIELD_ID: ${{ vars.STATUS_FIELD }}
+       REVIEW_VALUE_ID: ${{ vars.VALUE_REVIEW_ID }}
        FEATURE_BRANCH: ${{github.head_ref}}
      steps:   
         - name: setup gh
