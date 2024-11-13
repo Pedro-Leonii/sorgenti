@@ -32,12 +32,12 @@ jobs:
         - name: Early exit
           run: |
             if [ -z "${ISSUE_ID}" ]
-            do
+            then
               echo "Id della issue del feature branch non esiste"
               cd sorgenti
               gh run cancel ${{ github.run_id }}
               gh run watch ${{ github.run_id }}
-            done
+            fi
             
         - name: Change issue status to review
           run: |
