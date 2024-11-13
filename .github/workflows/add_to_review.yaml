@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
      GH_TOKEN: ${{ github.token }}
-     
+     PR_NUMBER: ${{ github.event.number }}
     steps:
       - name: setup gh
         run: sudo apt-get install gh
@@ -19,7 +19,6 @@ jobs:
       - name: clone repo
         run: gh repo clone https://github.com/Pedro-Leonii/sorgenti
 
-      - name: get open issues
+      - name: get pull request
         run: |
-          cd sorgenti
-          gh issue list 
+          gh pr view $PR_NUMBER
