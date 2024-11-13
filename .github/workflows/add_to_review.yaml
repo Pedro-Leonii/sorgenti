@@ -27,7 +27,7 @@ jobs:
         
         run: |
               issue_n=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
-              issue_id=$(gh issue view $issue_id --json id --jq .id)
+              issue_id=$(gh issue view $issue_n --json id --jq .id)
               echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
               
       - name: Early exit
