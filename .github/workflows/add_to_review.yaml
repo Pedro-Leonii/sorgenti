@@ -16,9 +16,10 @@ jobs:
         run: sudo apt-get install gh
   
       - name: clone repo
-        run: gh repo clone https://github.com/Pedro-Leonii/sorgenti
-  
-      - name: get pull request
+        run: | 
+          gh repo clone https://github.com/Pedro-Leonii/sorgenti
+          cd sorgenti
+          
+      - name: get issue
         run: |
-            cd sorgenti
-            gh pr view $PR_NUMBER | grep -E -o -m 1 '#[0-9]+'
+            (gh pr view $PR_NUMBER | grep -E -o -m 1 '#[0-9]+') >> $GITHUB_OUTPY
