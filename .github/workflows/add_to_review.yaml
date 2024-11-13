@@ -13,7 +13,7 @@ jobs:
        PROJECT_ID: ${{ secrets.PROJECT_ID }}
        STATUS_FIELD_ID: ${{ github.STATUS_FIELD }}
        REVIEW_VALUE_ID: ${{ github.VALUE_REVIEW_ID }}
-       
+       FEATURE_BRANCH: ${{github.head_ref}}
      steps:   
       - name: setup gh
         run: sudo apt-get install gh
@@ -25,8 +25,7 @@ jobs:
           
       - name: get issue id
         run: |
-          cd sorgenti
-          issue_n=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
+          issue_n=$(echo "$FEATURE_BRANCH" | grep -E -o -m 1 '[0-9]+')
           issue_id=$(gh issue view $issue_n --json id --jq .id)
           echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
               
