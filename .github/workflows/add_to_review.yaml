@@ -10,6 +10,11 @@ jobs:
   move_issue:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-            sudo apt install gh
-            gh -v 
+      - name: setup gh
+        run: sudo apt-get install gh
+
+      - name: clone repo
+        run: gh repo clone https://github.com/Pedro-Leonii/sorgenti
+
+      - name: get branches
+        run: gh issue list
