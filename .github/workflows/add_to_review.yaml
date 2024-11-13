@@ -1,0 +1,13 @@
+name: Inserisce le issue per cui è stata aperta una pull request nella colonna review della project board
+
+on: 
+  pull_request:
+    branches: 'features/**'
+    types: opened
+jobs:
+  move_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+            sudo apt install gh
+            gh -v 
