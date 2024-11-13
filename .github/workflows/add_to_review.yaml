@@ -4,23 +4,21 @@ on:
   pull_request:
     types: 
       - opened
-    branches: 
-      - 'feature/**'
-  workflow_dispatch:
   
 jobs:
   move_issue:
-    runs-on: ubuntu-latest
-    env:
-     GH_TOKEN: ${{ github.token }}
-     PR_NUMBER: ${{ github.event.number }}
-    steps:
+     if: startsWith(github.head_ref, 'feature/')
+     runs-on: ubuntu-latest
+     env:
+       GH_TOKEN: ${{ github.token }}
+       PR_NUMBER: ${{ github.event.number }}
+     steps:
       - name: setup gh
         run: sudo apt-get install gh
-
+  
       - name: clone repo
         run: gh repo clone https://github.com/Pedro-Leonii/sorgenti
-
+  
       - name: get pull request
         run: |
-          gh pr view $PR_NUMBER
+            gh pr view $PR_NUMBER
