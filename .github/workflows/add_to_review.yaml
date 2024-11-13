@@ -17,7 +17,7 @@ jobs:
         run: |
               id_issue=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '#([0-9]+)')
               echo "ID_ISSUE=$id_issue" >> $GITHUB_ENV
-              echo "$ID_ISSUE"
+              echo "$id_issue"
               
       - name: setup gh
         run: sudo apt-get install gh
