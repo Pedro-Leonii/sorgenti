@@ -19,5 +19,5 @@ jobs:
       - name: clone repo
         run: gh repo clone https://github.com/Pedro-Leonii/sorgenti
 
-      - name: get branches
-        run: gh issue list
+      - name: get directories
+        run: ls
