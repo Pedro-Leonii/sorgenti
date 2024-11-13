@@ -25,6 +25,7 @@ jobs:
           
       - name: get issue id
         run: |
+          cd sorgenti
           issue_n=$(echo "$FEATURE_BRANCH" | grep -E -o -m 1 '[0-9]+')
           issue_id=$(gh issue view $issue_n --json id --jq .id)
           echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
