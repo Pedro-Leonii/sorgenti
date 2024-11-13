@@ -2,8 +2,7 @@ name: Inserisce le issue per cui è stata aperta una pull request nella colonna 
 
 on: 
   pull_request:
-    types: 
-      - opened
+    types: [opened, reopened]
   
 jobs:
   move_issue:
@@ -21,4 +20,5 @@ jobs:
   
       - name: get pull request
         run: |
+            cd sorgenti
             gh pr view $PR_NUMBER
