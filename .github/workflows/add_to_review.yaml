@@ -4,6 +4,8 @@ on:
   pull_request:
     branches: 'features/**'
     types: opened
+  workflow_dispatch:
+  
 jobs:
   move_issue:
     runs-on: ubuntu-latest
