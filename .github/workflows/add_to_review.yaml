@@ -32,7 +32,7 @@ jobs:
               
       - name: Early exit
         run: |
-          if [ -z "${VAR}" ]
+          if [ -z "${ISSUE_ID}" ]
           do
             echo "Id della issue del feature branch non esiste"
             gh run cancel ${{ github.run_id }}
