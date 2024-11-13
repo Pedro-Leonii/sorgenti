@@ -9,6 +9,9 @@ on:
 jobs:
   move_issue:
     runs-on: ubuntu-latest
+    env:
+     GH_TOKEN: ${{ github.token }}
+     
     steps:
       - name: setup gh
         run: sudo apt-get install gh
