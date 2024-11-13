@@ -19,5 +19,7 @@ jobs:
       - name: clone repo
         run: gh repo clone https://github.com/Pedro-Leonii/sorgenti
 
-      - name: get directories
-        run: ls
+      - name: get open issues
+        run: |
+          cd sorgenti
+          gh issue list 
