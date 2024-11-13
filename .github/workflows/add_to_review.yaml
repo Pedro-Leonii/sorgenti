@@ -9,11 +9,8 @@ jobs:
      if: startsWith(github.head_ref, 'feature/') 
      runs-on: ubuntu-latest
      env:
-       GH_TOKEN: ${{ github.token }}
-       PROJECT_ID: ${{ secrets.PROJECT_ID }}
-       STATUS_FIELD_ID: ${{ vars.STATUS_FIELD }}
-       REVIEW_VALUE_ID: ${{ vars.VALUE_REVIEW_ID }}
-       FEATURE_BRANCH: ${{github.head_ref}}
+       GH_TOKEN: ${{ secrets.PAT_COMPILATI }}
+       
      steps:   
         - name: setup gh
           run: sudo apt-get install gh
@@ -25,7 +22,7 @@ jobs:
         - name: get issue id
           run: |
             cd sorgenti
-            issue_n=$(echo "$FEATURE_BRANCH" | grep -E -o -m 1 '[0-9]+')
+            issue_n=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
             issue_id=$(gh issue view $issue_n --json id --jq .id)
             echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
                 
@@ -42,5 +39,5 @@ jobs:
         - name: Change issue status to review
           run: |
             cd sorgenti
-            gh project item-edit --id $ISSUE_ID --field-id $STATUS_FIELD_ID --project-id $PROJECT_ID --single-select-option-id $REVIEW_VALUE_ID
+            gh project item-edit --id $ISSUE_ID --field-id ${{ vars.STATUS_FIELD }} --project-id ${{ secrets.PROJECT_ID }} --single-select-option-id ${{ vars.VALUE_REVIEW_ID }}
           
