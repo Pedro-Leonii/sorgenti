@@ -15,9 +15,8 @@ jobs:
      steps:
       - name: get issue id
         run: |
-              id_issue=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '#([0-9]+)')
+              id_issue=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '([0-9]+)')
               echo "ID_ISSUE=$id_issue" >> $GITHUB_ENV
-              echo "$id_issue"
               
       - name: setup gh
         run: sudo apt-get install gh
@@ -26,4 +25,7 @@ jobs:
         run: | 
           gh repo clone https://github.com/Pedro-Leonii/sorgenti
           cd sorgenti
-      
+          
+      - name: get id for field status
+        run: |
+          echo $ID_ISSUE
