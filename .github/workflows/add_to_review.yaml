@@ -10,8 +10,11 @@ jobs:
      runs-on: ubuntu-latest
      env:
        GH_TOKEN: ${{ github.token }}
-       PR_NUMBER: ${{ github.event.number }}
      steps:
+      - name: get issue id
+        run: |
+              id_issue = echo "${{github.head_ref}}" | grep -E -o -m 1 '#([0-9]+)'
+              echo "ID_ISSUE=$id_issue" >> $GITHUB_ENV
       - name: setup gh
         run: sudo apt-get install gh
   
@@ -20,6 +23,3 @@ jobs:
           gh repo clone https://github.com/Pedro-Leonii/sorgenti
           cd sorgenti
           
-      - name: get issue
-        run: |
-            (gh pr view $PR_NUMBER | grep -E -o -m 1 '#[0-9]+') >> $GITHUB_OUTPY
