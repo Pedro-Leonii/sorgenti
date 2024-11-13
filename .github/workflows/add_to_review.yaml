@@ -15,31 +15,32 @@ jobs:
        REVIEW_VALUE_ID: ${{ github.VALUE_REVIEW_ID }}
        FEATURE_BRANCH: ${{github.head_ref}}
      steps:   
-      - name: setup gh
-        run: sudo apt-get install gh
-  
-      - name: clone repo
-        run: | 
-          gh repo clone https://github.com/Pedro-Leonii/sorgenti
-          cd sorgenti
+        - name: setup gh
+          run: sudo apt-get install gh
+    
+        - name: clone repo
+          run: | 
+            gh repo clone https://github.com/Pedro-Leonii/sorgenti
+            
+        - name: get issue id
+          run: |
+            cd sorgenti
+            issue_n=$(echo "$FEATURE_BRANCH" | grep -E -o -m 1 '[0-9]+')
+            issue_id=$(gh issue view $issue_n --json id --jq .id)
+            echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
+                
+        - name: Early exit
+          run: |
+            if [ -z "${ISSUE_ID}" ]
+            do
+              echo "Id della issue del feature branch non esiste"
+              cd sorgenti
+              gh run cancel ${{ github.run_id }}
+              gh run watch ${{ github.run_id }}
+            done
+            
+        - name: Change issue status to review
+          run: |
+            cd sorgenti
+            gh project item-edit --id $ISSUE_ID --field-id $STATUS_FIELD_ID --project-id $PROJECT_ID --single-select-option-id $REVIEW_VALUE_ID
           
-      - name: get issue id
-        run: |
-          cd sorgenti
-          issue_n=$(echo "$FEATURE_BRANCH" | grep -E -o -m 1 '[0-9]+')
-          issue_id=$(gh issue view $issue_n --json id --jq .id)
-          echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
-              
-      - name: Early exit
-        run: |
-          if [ -z "${ISSUE_ID}" ]
-          do
-            echo "Id della issue del feature branch non esiste"
-            gh run cancel ${{ github.run_id }}
-            gh run watch ${{ github.run_id }}
-          done
-          
-      - name: Change issue status to review
-        run: |
-          gh project item-edit --id $ISSUE_ID --field-id $STATUS_FIELD_ID --project-id $PROJECT_ID --single-select-option-id $REVIEW_VALUE_ID
-        
