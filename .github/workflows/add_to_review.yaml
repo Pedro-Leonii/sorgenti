@@ -2,8 +2,10 @@ name: Inserisce le issue per cui è stata aperta una pull request nella colonna 
 
 on: 
   pull_request:
-    branches: 'feature/**'
-    types: opened
+    types: 
+      - opened
+    branches: 
+      - 'feature/**'
   workflow_dispatch:
   
 jobs:
