@@ -21,4 +21,4 @@ jobs:
       - name: get pull request
         run: |
             cd sorgenti
-            gh pr view $PR_NUMBER | grep -E -o -n 1 '#[0-9]+'
+            gh pr view $PR_NUMBER | grep -E -o -m 1 '#[0-9]+'
