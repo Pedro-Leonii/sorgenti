@@ -32,6 +32,7 @@ jobs:
             issue_number=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
             issue_id=$(gh project item-list ${{ env.PROJECT_NUMBER }} --owner @me --format json --jq '.items[] | select(.content.number=="$issue_number") | .id')
             echo "$issue_id"
+            echo "$issue_number"
             echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
             
         - name: get project id
