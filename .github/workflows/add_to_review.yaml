@@ -2,7 +2,7 @@ name: Inserisce le issue per cui è stata aperta una pull request nella colonna 
 
 on: 
   pull_request:
-    types: [opened, reopened]
+    types: [closed]
   
 jobs:
   move_issue:
@@ -44,7 +44,7 @@ jobs:
         - name: Change issue status to review
           working-directory: sorgenti
           run: |
-            review_value_id=$(gh project field-list ${{ env.PROJECT_NUMBER }} --owner @me --format json --jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Review") | .id')
+            review_value_id=$(gh project field-list ${{ env.PROJECT_NUMBER }} --owner @me --format json --jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="To do") | .id')
             field_status_id=$(gh project field-list ${{ env.PROJECT_NUMBER }} --owner @me --format json --jq '.fields[] | select(.name=="Status") | .id')
             gh project item-edit --id ${{ env.ISSUE_ID }} --field-id $field_status_id --project-id ${{ env.PROJECT_ID }} --single-select-option-id $review_value_id
           
