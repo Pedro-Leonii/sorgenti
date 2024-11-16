@@ -30,21 +30,19 @@ jobs:
           working-directory: sorgenti
           run: |
             issue_number=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
-            issue_id=$(gh project item-list $PROJECT_NUMBER --owner @me --format json --jq '.items[] | select(.content.number=="$issue_number") | .id')
+            issue_id=$(gh project item-list ${{ env.PROJECT_NUMBER }} --owner @me --format json --jq '.items[] | select(.content.number=="$issue_number") | .id')
             echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
             
         - name: get project id
           working-directory: sorgenti
           run: |
-            project_id=$(gh project list --format json | jq '.projects[] | select(.number=="$PROJECT_NUMBER") | .id')
+            project_id=$(gh project list --format json | jq '.projects[] | select(.number=="${{ env.PROJECT_NUMBER }}") | .id')
             echo "PROJECT_ID=$project_id" >> $GITHUB_ENV
         
         - name: Change issue status to review
           working-directory: sorgenti
           run: |
-            review_value_id=$(gh project field-list $PROJECT_NUMBER --owner @me --format json --jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Review") | .id')
-            field_status_id=$(gh project field-list $PROJECT_NUMBER --owner @me --format json --jq '.fields[] | select(.name=="Status") | .id')
-            echo "$PROJECT_ID"
-            wcho "$ISSUE_ID"
-            gh project item-edit --id $ISSUE_ID --field-id $field_status_id --project-id $PROJECT_ID --single-select-option-id $review_value_id
+            review_value_id=$(gh project field-list ${{ env.PROJECT_NUMBER }} --owner @me --format json --jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Review") | .id')
+            field_status_id=$(gh project field-list ${{ env.PROJECT_NUMBER }} --owner @me --format json --jq '.fields[] | select(.name=="Status") | .id')
+            gh project item-edit --id ${{ env.ISSUE_ID }} --field-id $field_status_id --project-id ${{ env.PROJECT_ID }} --single-select-option-id $review_value_id
           
