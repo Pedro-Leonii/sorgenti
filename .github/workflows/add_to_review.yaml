@@ -44,9 +44,7 @@ jobs:
           run: |
             review_value_id=$(gh project field-list $PROJECT_NUMBER --owner @me --format json --jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Review") | .id')
             field_status_id=$(gh project field-list $PROJECT_NUMBER --owner @me --format json --jq '.fields[] | select(.name=="Status") | .id')
-            echo "$ISSUE_ID"
             echo "$field_status_id"
-            echo "$PROJECT_ID"
             echo "$review_value_id"
             gh project item-edit --id $ISSUE_ID --field-id $field_status_id --project-id $PROJECT_ID --single-select-option-id $review_value_id
           
