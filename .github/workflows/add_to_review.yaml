@@ -30,7 +30,7 @@ jobs:
           working-directory: sorgenti
           run: |
             issue_number=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
-            issue_id=$(gh project item-list $PROJECT_NUMBER --owner @me --format json --jq '.items[] | select(.number=$issue_number) | .id')
+            issue_id=$(gh project item-list $PROJECT_NUMBER --owner @me --format json --jq '.items[] | select(.number="$issue_number") | .id')
             echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
             
         - name: get project id
