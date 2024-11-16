@@ -9,6 +9,7 @@ jobs:
      if: startsWith(github.head_ref, 'feature/') 
      runs-on: ubuntu-latest
      env:
+       PROJECT_NAME: "Prova"
        GH_TOKEN: ${{ secrets.PAT_COMPILATI }}
        
      steps:   
@@ -18,26 +19,30 @@ jobs:
         - name: clone repo
           run: | 
             gh repo clone https://github.com/Pedro-Leonii/sorgenti
+        
+        - name: get project number
+          working-directory: sorgenti
+          run: |
+            project_number=$(gh project list --format json | jq '.projects[] | select(.title=="Prova") | .number')
+            echo "PROJECT_NUMBER=$project_number" >> $GITHUB_ENV
             
         - name: get issue id
+          working-directory: sorgenti
           run: |
-            cd sorgenti
-            issue_n=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
-            issue_id=$(gh issue view $issue_n --json id --jq .id)
+            issue_number=$(echo "${{github.head_ref}}" | grep -E -o -m 1 '[0-9]+')
+            issue_id=$(gh project item-list $PROJECT_NUMBER --owner @me --format json --jq '.items[] | select(.number=$issue_number) | .id')
             echo "ISSUE_ID=$issue_id" >> $GITHUB_ENV
-                
-        - name: Early exit
-          run: |
-            if [ -z "${ISSUE_ID}" ]
-            then
-              echo "Id della issue del feature branch non esiste"
-              cd sorgenti
-              gh run cancel ${{ github.run_id }}
-              gh run watch ${{ github.run_id }}
-            fi
             
-        - name: Change issue status to review
+        - name: get project id
+          working-directory: sorgenti
           run: |
-            cd sorgenti
-            gh project item-edit --id $ISSUE_ID --field-id ${{ vars.STATUS_FIELD }} --project-id ${{ secrets.PROJECT_ID }} --single-select-option-id ${{ vars.VALUE_REVIEW_ID }}
+            project_id=$(gh project list --format json | jq '.projects[] | select(.number==$PROJECT_NUMBER) | .id')
+            echo "PROJECT_ID=$project_id" >> $GITHUB_ENV
+        
+        - name: Change issue status to review
+          working-directory: sorgenti
+          run: |
+            review_value_id=$(gh project field-list $PROJECT_NUMBER --owner @me --format json --jq '.fields[] | select(.name=="Status") | .options[] | select(.name=="Review") | .id'
+            field_status_id=$(gh project field-list $PROJECT_NUMBER --owner @me --format json --jq '.fields[] | select(.name=="Status") | .id')
+            gh project item-edit --id $ISSUE_ID --field-id $field_status_id --project-id $PROJECT_ID --single-select-option-id $review_value_id
           
