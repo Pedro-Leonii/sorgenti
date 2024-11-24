@@ -26,7 +26,7 @@ jobs:
                 path: dst
                 token: ${{ secrets.PAT_COMPILATI }}
             
-            - name: Setup tex path
+            - name: Setup .tex path
               id: setup_tex
               run: |
                     echo "TEX_PATH<<EOF" >> $GITHUB_OUTPUT
@@ -39,6 +39,8 @@ jobs:
                 work_in_root_file_dir: true
                 root_file: |
                     ${{ steps.setup_tex.outputs.TEX_PATH }}
+              env:
+                TEXINPUTS: ".:./Packages//:"
       
             - name: Remove usless files in src
               run: |
