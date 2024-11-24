@@ -47,6 +47,17 @@ jobs:
                 cd src
                 rm -rf $DIRS_TO_DEL
                 find * -type f ! -name "*.pdf" -delete
+                parent_dir=$(pwd)
+                find . -mindepth 2 -type d | while read dir; do
+                  file_count=$(find "$dir" -maxdepth 1 -type f | wc -l)
+
+                  if [ "$file_count" -eq 1 ]; then
+                    # Find the file in the directory
+                    file_to_move=$(find "$dir" -maxdepth 1 -type f)
+                    mv "$file_to_move" "$parent_dir"
+                    echo "Moved: $file_to_move to $parent_dir"
+                  fi
+                done
                 cd ..
                 
             - name: Copy ignored directories
