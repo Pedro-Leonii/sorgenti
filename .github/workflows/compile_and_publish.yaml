@@ -40,7 +40,7 @@ jobs:
                 root_file: |
                     ${{ steps.setup_tex.outputs.TEX_PATH }}
               env:
-                TEXINPUTS: ".//:"
+                TEXINPUTS: "/home/runner/work/sorgenti/sorgenti/src/Packages:"
       
             - name: Remove usless files in src
               run: |
