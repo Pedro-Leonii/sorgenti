@@ -1,0 +1,24 @@
+name: Inserisce le issue per cui è stata aperta una pull request nella colonna review della project board
+
+on: 
+  pull_request:
+    branches: 'features/**'
+    types: opened
+  workflow_dispatch:
+  
+jobs:
+  move_issue:
+    runs-on: ubuntu-latest
+    env:
+     GH_TOKEN: ${{ github.token }}
+     PR_NUMBER: ${{ github.event.number }}
+    steps:
+      - name: setup gh
+        run: sudo apt-get install gh
+
+      - name: clone repo
+        run: gh repo clone https://github.com/Pedro-Leonii/sorgenti
+
+      - name: get pull request
+        run: |
+          gh pr view $PR_NUMBER
