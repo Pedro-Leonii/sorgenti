@@ -13,8 +13,7 @@ jobs:
             - name: Clona repository
               run: | 
                 gh repo clone https://github.com/Pedro-Leonii/sorgenti
-                ls -a
-            
+
             - name: Installa aspell
               run: |
                 sudo apt-get install aspell
@@ -28,5 +27,5 @@ jobs:
             - name: Aggiunge il commento con errori
               run: |
                 cd sorgenti
-                gh pr comment ${{ github.event.pull_request.number }} -F */errori.md
+                tree
 
