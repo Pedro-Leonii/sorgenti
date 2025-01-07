@@ -1,0 +1,20 @@
+name: Controllo grammaticale
+
+on:
+    pull_request:
+        types: [opened, reopened]
+jobs:
+    controllo_grammaticale:
+        if: startsWith(github.head_ref, 'feature/')
+        runs-on: ubuntu-latest
+        env:
+            GH_TOKEN: ${{ secrets.PAT_CONTR_GRAM }}
+        steps:
+            - name: Clona repository
+              run: | 
+                gh repo clone https://github.com/PedroLeonii/prova1
+
+            - name: Ottiene id della pull request
+              run: |
+                echo "Pull Request number: ${{ github.event.pull_request.number }}"
+
