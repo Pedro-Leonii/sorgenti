@@ -27,5 +27,6 @@ jobs:
 
             - name: Aggiunge il commento con errori
               run: |
-                tree -a
+                gh pr comment ${{ github.event.pull_request.number }} -F errori.md
+
 
