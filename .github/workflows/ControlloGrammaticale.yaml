@@ -22,6 +22,7 @@ jobs:
             - name: Controllo grammaticale
               run: |
                 cd sorgenti
+                git checkout ${{ github.head_ref }}
                 bash .github/scripts/errori.sh
 
             - name: Aggiunge il commento con errori
