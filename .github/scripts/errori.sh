@@ -1,7 +1,6 @@
 #!bin/bash
 
-git pull origin develop
-files_to_check=$(git diff --name-only develop... | grep .*.tex)
+files_to_check=$(git diff --name-only origin/develop... | grep .*.tex)
 
 for file in $files_to_check
 do
