@@ -12,7 +12,7 @@ jobs:
         steps:
             - name: Clona repository
               run: | 
-                gh repo clone https://github.com/PedroLeonii/prova1
+                gh repo clone https://github.com/Pedro-Leonii/sorgenti
 
             - name: Ottiene id della pull request
               run: |
