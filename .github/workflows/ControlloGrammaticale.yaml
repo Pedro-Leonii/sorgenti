@@ -13,8 +13,17 @@ jobs:
             - name: Clona repository
               run: | 
                 gh repo clone https://github.com/Pedro-Leonii/sorgenti
-
-            - name: Ottiene id della pull request
+            
+            - name: Installa aspell
               run: |
-                echo "Pull Request number: ${{ github.event.pull_request.number }}"
+                sudo apt-get install aspell
+                sudo apt-get install aspell-it
+
+            - name: Controllo grammaticale
+              run: |
+                bash .github/scripts/errori.sh
+
+            - name: Aggiunge il commento con errori
+              run: |
+                gh pr comment ${{ github.event.pull_request.number }} -F errori.md
 
