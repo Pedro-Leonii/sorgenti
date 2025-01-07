@@ -26,6 +26,5 @@ jobs:
 
             - name: Aggiunge il commento con errori
               run: |
-                cd sorgenti
                 tree -a
 
