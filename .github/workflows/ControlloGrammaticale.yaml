@@ -13,6 +13,7 @@ jobs:
             - name: Clona repository
               run: | 
                 gh repo clone https://github.com/Pedro-Leonii/sorgenti
+                cd sorgenti
             
             - name: Installa aspell
               run: |
