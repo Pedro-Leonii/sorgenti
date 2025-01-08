@@ -1,6 +1,9 @@
 #!bin/bash
 
-files_to_check=$(git diff --name-only origin/develop... | grep .*.tex)
+curr_br=$1
+branch_url=$(gh repo view -b $curr_br | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sed -e "s/tree/blob/g")
+files_to_check=$(git diff --name-only origin/develop...  $curr_br | grep .*.tex)
+
 
 for file in $files_to_check
 do
@@ -21,7 +24,7 @@ do
         for pos in $error_positions
         do
             # Per ogni errore aggiunge al file errori.md un link all'errore
-            echo "- ⚠️ - parola: ***$error*** - riga: ***$pos*** - [link alla riga]($file/#L$pos)" >> errori.md
+            echo "- ⚠️ - parola: ***$error*** - riga: ***$pos*** - [link alla riga]($branch_url/$file#L$pos)" >> errori.md
         done
     done
 done

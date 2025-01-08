@@ -11,8 +11,8 @@ jobs:
             GH_TOKEN: ${{ secrets.PAT_CONTR_GRAM }}
         steps:
             - name: Clona repository
-              run: | 
-                gh repo clone https://github.com/Pedro-Leonii/sorgenti
+              run: |  
+                gh repo clone ${{ github.action_repository }}
 
             - name: Installa aspell
               run: |
@@ -21,13 +21,12 @@ jobs:
 
             - name: Controllo grammaticale
               run: |
-                cd sorgenti
-                git checkout ${{ github.head_ref }}
-                bash .github/scripts/errori.sh
+                bash scripts/errori.sh ${{ github.head_ref }}
+              working-directory: ${{ github.action_path }}
 
             - name: Aggiunge il commento con errori
               run: |
-                cd sorgenti
                 gh pr comment ${{ github.event.pull_request.number }} -F errori.md
+              working-directory: sorgenti
 
 
