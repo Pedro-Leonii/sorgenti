@@ -21,8 +21,8 @@ jobs:
 
             - name: Controllo grammaticale
               run: |
-                bash scripts/errori.sh "${{ github.head_ref }}"
-              working-directory: sorgenti/.github
+                bash .github/scripts/errori.sh "${{ github.head_ref }}"
+              working-directory: sorgenti
 
             - name: Aggiunge il commento con errori
               run: |
