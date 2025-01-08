@@ -13,6 +13,7 @@ jobs:
             - name: Clona repository
               run: |  
                 echo "${{ github.action_repository }}"
+                echo "${{ github.repositoryUrl }}"
                 gh repo clone ${{ github.action_repository }}
 
             - name: Installa aspell
