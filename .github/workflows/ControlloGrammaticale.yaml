@@ -27,6 +27,6 @@ jobs:
             - name: Aggiunge il commento con errori
               run: |
                 gh pr comment ${{ github.event.pull_request.number }} -F errori.md
-              working-directory: sorgenti
+              working-directory: sorgenti/.github
 
 
