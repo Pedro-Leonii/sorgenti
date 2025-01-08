@@ -1,8 +1,7 @@
 #!bin/bash
 
-curr_br=$1
-branch_url=$(gh repo view -b $curr_br | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sed -e "s/tree/blob/g")
-git checkout $curr_br
+branch_url=$(gh repo view -b $1 | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sed -e "s/tree/blob/g")
+git checkout $1
 files_to_check=$(git diff --name-only origin/develop... | grep .*.tex)
 
 
