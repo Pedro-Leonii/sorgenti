@@ -1,0 +1,32 @@
+name: Controllo grammaticale
+
+on:
+    pull_request:
+        types: [opened, reopened]
+jobs:
+    controllo_grammaticale:
+        if: startsWith(github.head_ref, 'feature/')
+        runs-on: ubuntu-latest
+        env:
+            GH_TOKEN: ${{ secrets.PAT_CONTR_GRAM }}
+        steps:
+            - name: Clona repository
+              run: |  
+                gh repo clone ${{ github.repositoryUrl }}
+
+            - name: Installa aspell
+              run: |
+                sudo apt-get install aspell
+                sudo apt-get install aspell-it
+
+            - name: Controllo grammaticale
+              run: |
+                bash .github/scripts/errori.sh "${{ github.head_ref }}"
+              working-directory: sorgenti
+
+            - name: Aggiunge il commento con errori
+              run: |
+                gh pr comment ${{ github.event.pull_request.number }} -F errori.md
+              working-directory: sorgenti/.github
+
+
