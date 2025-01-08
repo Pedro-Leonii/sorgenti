@@ -22,7 +22,7 @@ jobs:
             - name: Controllo grammaticale
               run: |
                 bash scripts/errori.sh ${{ github.head_ref }}
-              working-directory: ${{ github.action_path }}
+              working-directory: sorgenti/.github/workflows
 
             - name: Aggiunge il commento con errori
               run: |
